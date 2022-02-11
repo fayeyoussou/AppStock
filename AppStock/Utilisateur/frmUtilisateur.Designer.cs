@@ -35,6 +35,8 @@
             this.btnEnregistrer = new System.Windows.Forms.Button();
             this.btnEffacer = new System.Windows.Forms.Button();
             this.lblEmail = new System.Windows.Forms.Label();
+            this.dgRole = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dgRole)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -97,12 +99,21 @@
             this.lblEmail.Size = new System.Drawing.Size(0, 13);
             this.lblEmail.TabIndex = 6;
             // 
+            // dgRole
+            // 
+            this.dgRole.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgRole.Location = new System.Drawing.Point(215, 83);
+            this.dgRole.Name = "dgRole";
+            this.dgRole.Size = new System.Drawing.Size(176, 105);
+            this.dgRole.TabIndex = 7;
+            // 
             // frmUtilisateur
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(425, 445);
             this.ControlBox = false;
+            this.Controls.Add(this.dgRole);
             this.Controls.Add(this.lblEmail);
             this.Controls.Add(this.btnEffacer);
             this.Controls.Add(this.btnEnregistrer);
@@ -112,6 +123,8 @@
             this.Controls.Add(this.label1);
             this.Name = "frmUtilisateur";
             this.Text = "frmUtilisateur";
+            this.Load += new System.EventHandler(this.frmUtilisateur_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.dgRole)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,5 +139,6 @@
         private System.Windows.Forms.Button btnEnregistrer;
         private System.Windows.Forms.Button btnEffacer;
         private System.Windows.Forms.Label lblEmail;
+        private System.Windows.Forms.DataGridView dgRole;
     }
 }

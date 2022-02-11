@@ -27,12 +27,12 @@ namespace AppStock
         private void btnAjouter_Click(object sender, EventArgs e)
         {
             produit p = new produit();
-            p.libelleProduit = txtLibelle.Text;
-            p.descriptionProduit = txtDescription.Text;
-            p.prixUProduit = double.Parse(txtPU.Text);
-            p.qteProduit = double.Parse(txtQte.Text);
-            bd.produits.Add(p);
-            bd.SaveChanges();
+            p.libelle = txtLibelle.Text;
+            p.description = txtDescription.Text;
+            //p.prixUProduit = double.Parse(txtPU.Text);
+            //p.qteProduit = double.Parse(txtQte.Text);
+            //bd.produits.Add(p);
+            //bd.SaveChanges();
             effacer();
 
 
@@ -40,12 +40,12 @@ namespace AppStock
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            dgProduit.DataSource = bd.produits.ToList();
+            dgProduit.DataSource = bd.produit.ToList();
         }
         private void effacer()
         {
             txtPU.Text= txtDescription.Text = txtQte.Text= txtLibelle.Text = "";
-            dgProduit.DataSource = bd.produits.ToList();
+            dgProduit.DataSource = bd.produit.ToList();
             txtLibelle.Focus(); 
         }
 
@@ -53,11 +53,11 @@ namespace AppStock
         {
             int? id = int.Parse(dgProduit.CurrentRow.Cells[0].Value.ToString());
             
-            produit p = bd.produits.Find(id);
-            p.libelleProduit = txtLibelle.Text;
-            p.descriptionProduit = txtDescription.Text;
-            p.prixUProduit = double.Parse(txtPU.Text);
-            p.qteProduit = double.Parse(txtQte.Text);
+            produit p = bd.produit.Find(id);
+            p.libelle = txtLibelle.Text;
+            p.description = txtDescription.Text;
+            //p.prixUProduit = double.Parse(txtPU.Text);
+            //p.qteProduit = double.Parse(txtQte.Text);
             bd.SaveChanges();
             effacer();
         }
@@ -65,8 +65,8 @@ namespace AppStock
         private void btnSupprimer_Click(object sender, EventArgs e)
         {
             int? id = int.Parse(dgProduit.CurrentRow.Cells[0].Value.ToString());
-            produit p = bd.produits.Find(id);
-            bd.produits.Remove(p);
+            produit p = bd.produit.Find(id);
+            bd.produit.Remove(p);
             bd.SaveChanges();
             effacer();
         }
@@ -81,24 +81,24 @@ namespace AppStock
 
         private void btnRechercher_Click(object sender, EventArgs e)
         {
-            var liste = bd.produits.ToList();
+            var liste = bd.produit.ToList();
             if (!String.IsNullOrEmpty(txtRLibele.Text))
             {
-                liste = liste.Where(a =>a.libelleProduit.ToUpper().Contains(txtRLibele.Text.ToUpper())).ToList();
+                liste = liste.Where(a =>a.libelle.ToUpper().Contains(txtRLibele.Text.ToUpper())).ToList();
             }
             if (!String.IsNullOrEmpty(txtRDesc.Text))
             {
-                liste = liste.Where(a => a.libelleProduit.ToUpper().Contains(txtRDesc.Text.ToUpper())).ToList();
+                liste = liste.Where(a => a.libelle.ToUpper().Contains(txtRDesc.Text.ToUpper())).ToList();
             }
             if (!String.IsNullOrEmpty(txtRSInf.Text))
             {
                 double Qte = double.Parse(txtRSInf.Text);
-                liste = liste.Where(a => a.qteProduit < Qte).ToList();
+                //liste = liste.Where(a => a.qteProduit < Qte).ToList();
             }
             if (!String.IsNullOrEmpty(txtRSSup.Text))
             {
                 double Qte = double.Parse(txtRSSup.Text);
-                liste = liste.Where(a => a.qteProduit > Qte).ToList();
+                //liste = liste.Where(a => a.qteProduit > Qte).ToList();
             }
             dgProduit.DataSource = liste;
         }

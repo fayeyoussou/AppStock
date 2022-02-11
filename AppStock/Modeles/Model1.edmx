@@ -15,6 +15,7 @@
           <Property Name="dateExpiration" Type="date" Nullable="false" />
           <Property Name="quantite" Type="float" Nullable="false" />
           <Property Name="prixUnitaire" Type="float" Nullable="false" />
+          <Property Name="status" Type="nchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="categorie">
           <Key>
@@ -31,6 +32,7 @@
           <Property Name="date" Type="date" Nullable="false" />
           <Property Name="idLivraison" Type="int" />
           <Property Name="idUtilisateur" Type="int" Nullable="false" />
+          <Property Name="status" Type="nchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="livraison">
           <Key>
@@ -49,13 +51,14 @@
           <Property Name="description" Type="nvarchar" MaxLength="50" />
           <Property Name="QteSeuil" Type="float" Nullable="false" />
           <Property Name="idCategorie" Type="int" />
+          <Property Name="status" Type="nchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="role">
           <Key>
             <PropertyRef Name="id" />
           </Key>
           <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="nom" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="20" Nullable="false" />
         </EntityType>
         <EntityType Name="utilisateur">
           <Key>
@@ -67,6 +70,10 @@
           <Property Name="email" Type="nvarchar" MaxLength="80" Nullable="false" />
           <Property Name="status" Type="nchar" MaxLength="1" Nullable="false" />
           <Property Name="idRole" Type="int" Nullable="false" />
+          <Property Name="nom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="prenom" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="adresse" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="telephone" Type="varchar" MaxLength="9" Nullable="false" />
         </EntityType>
         <EntityType Name="venteProduit">
           <Key>
@@ -76,6 +83,7 @@
           <Property Name="idFacture" Type="int" Nullable="false" />
           <Property Name="idApprivisionnement" Type="int" Nullable="false" />
           <Property Name="quantite" Type="float" Nullable="false" />
+          <Property Name="status" Type="nchar" MaxLength="1" />
         </EntityType>
         <Association Name="FK_approvisionnement_produit">
           <End Role="produit" Type="Self.produit" Multiplicity="1" />
@@ -209,8 +217,6 @@
           <EntitySet Name="facture" EntityType="bdStockModel.facture" />
           <EntitySet Name="livraison" EntityType="bdStockModel.livraison" />
           <EntitySet Name="produit" EntityType="bdStockModel.produit" />
-          <EntitySet Name="role" EntityType="bdStockModel.role" />
-          <EntitySet Name="utilisateur" EntityType="bdStockModel.utilisateur" />
           <EntitySet Name="venteProduit" EntityType="bdStockModel.venteProduit" />
           <AssociationSet Name="FK_approvisionnement_produit" Association="bdStockModel.FK_approvisionnement_produit">
             <End Role="produit" EntitySet="produit" />
@@ -228,13 +234,15 @@
             <End Role="livraison" EntitySet="livraison" />
             <End Role="facture" EntitySet="facture" />
           </AssociationSet>
-          <AssociationSet Name="FK_facture_utilisateur" Association="bdStockModel.FK_facture_utilisateur">
-            <End Role="utilisateur" EntitySet="utilisateur" />
-            <End Role="facture" EntitySet="facture" />
-          </AssociationSet>
           <AssociationSet Name="FK_venteProduit_facture" Association="bdStockModel.FK_venteProduit_facture">
             <End Role="facture" EntitySet="facture" />
             <End Role="venteProduit" EntitySet="venteProduit" />
+          </AssociationSet>
+          <EntitySet Name="role" EntityType="bdStockModel.role" />
+          <EntitySet Name="utilisateur" EntityType="bdStockModel.utilisateur" />
+          <AssociationSet Name="FK_facture_utilisateur" Association="bdStockModel.FK_facture_utilisateur">
+            <End Role="utilisateur" EntitySet="utilisateur" />
+            <End Role="facture" EntitySet="facture" />
           </AssociationSet>
           <AssociationSet Name="FK_utilisateur_role" Association="bdStockModel.FK_utilisateur_role">
             <End Role="role" EntitySet="role" />
@@ -253,6 +261,7 @@
           <Property Name="prixUnitaire" Type="Double" Nullable="false" />
           <NavigationProperty Name="produit" Relationship="bdStockModel.FK_approvisionnement_produit" FromRole="approvisionnement" ToRole="produit" />
           <NavigationProperty Name="venteProduit" Relationship="bdStockModel.FK_venteProduit_approvisionnement" FromRole="approvisionnement" ToRole="venteProduit" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="categorie">
           <Key>
@@ -271,8 +280,9 @@
           <Property Name="idLivraison" Type="Int32" />
           <Property Name="idUtilisateur" Type="Int32" Nullable="false" />
           <NavigationProperty Name="livraison" Relationship="bdStockModel.FK_facture_livraison" FromRole="facture" ToRole="livraison" />
-          <NavigationProperty Name="utilisateur" Relationship="bdStockModel.FK_facture_utilisateur" FromRole="facture" ToRole="utilisateur" />
           <NavigationProperty Name="venteProduit" Relationship="bdStockModel.FK_venteProduit_facture" FromRole="facture" ToRole="venteProduit" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="utilisateur" Relationship="bdStockModel.FK_facture_utilisateur" FromRole="facture" ToRole="utilisateur" />
         </EntityType>
         <EntityType Name="livraison">
           <Key>
@@ -294,27 +304,7 @@
           <Property Name="idCategorie" Type="Int32" />
           <NavigationProperty Name="approvisionnement" Relationship="bdStockModel.FK_approvisionnement_produit" FromRole="produit" ToRole="approvisionnement" />
           <NavigationProperty Name="categorie" Relationship="bdStockModel.FK_produit_categorie" FromRole="produit" ToRole="categorie" />
-        </EntityType>
-        <EntityType Name="role">
-          <Key>
-            <PropertyRef Name="id" />
-          </Key>
-          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="nom" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
-          <NavigationProperty Name="utilisateur" Relationship="bdStockModel.FK_utilisateur_role" FromRole="role" ToRole="utilisateur" />
-        </EntityType>
-        <EntityType Name="utilisateur">
-          <Key>
-            <PropertyRef Name="idUtilisateur" />
-          </Key>
-          <Property Name="idUtilisateur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="identifiant" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="motDePasse" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="email" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
-          <Property Name="status" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
-          <Property Name="idRole" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="facture" Relationship="bdStockModel.FK_facture_utilisateur" FromRole="utilisateur" ToRole="facture" />
-          <NavigationProperty Name="role" Relationship="bdStockModel.FK_utilisateur_role" FromRole="utilisateur" ToRole="role" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="venteProduit">
           <Key>
@@ -326,6 +316,7 @@
           <Property Name="quantite" Type="Double" Nullable="false" />
           <NavigationProperty Name="approvisionnement" Relationship="bdStockModel.FK_venteProduit_approvisionnement" FromRole="venteProduit" ToRole="approvisionnement" />
           <NavigationProperty Name="facture" Relationship="bdStockModel.FK_venteProduit_facture" FromRole="venteProduit" ToRole="facture" />
+          <Property Name="status" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
         </EntityType>
         <Association Name="FK_approvisionnement_produit">
           <End Type="bdStockModel.produit" Role="produit" Multiplicity="1" />
@@ -375,18 +366,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_facture_utilisateur">
-          <End Type="bdStockModel.utilisateur" Role="utilisateur" Multiplicity="1" />
-          <End Type="bdStockModel.facture" Role="facture" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="utilisateur">
-              <PropertyRef Name="idUtilisateur" />
-            </Principal>
-            <Dependent Role="facture">
-              <PropertyRef Name="idUtilisateur" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_venteProduit_facture">
           <End Type="bdStockModel.facture" Role="facture" Multiplicity="1" />
           <End Type="bdStockModel.venteProduit" Role="venteProduit" Multiplicity="*" />
@@ -396,6 +375,43 @@
             </Principal>
             <Dependent Role="venteProduit">
               <PropertyRef Name="idFacture" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="role">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nom" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="utilisateur" Relationship="bdStockModel.FK_utilisateur_role" FromRole="role" ToRole="utilisateur" />
+        </EntityType>
+        <EntityType Name="utilisateur">
+          <Key>
+            <PropertyRef Name="idUtilisateur" />
+          </Key>
+          <Property Name="idUtilisateur" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="identifiant" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="motDePasse" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="1" FixedLength="true" Unicode="true" />
+          <Property Name="idRole" Type="Int32" Nullable="false" />
+          <Property Name="nom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="prenom" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="adresse" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="telephone" Type="String" Nullable="false" MaxLength="9" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="facture" Relationship="bdStockModel.FK_facture_utilisateur" FromRole="utilisateur" ToRole="facture" />
+          <NavigationProperty Name="role" Relationship="bdStockModel.FK_utilisateur_role" FromRole="utilisateur" ToRole="role" />
+        </EntityType>
+        <Association Name="FK_facture_utilisateur">
+          <End Type="bdStockModel.utilisateur" Role="utilisateur" Multiplicity="1" />
+          <End Type="bdStockModel.facture" Role="facture" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="utilisateur">
+              <PropertyRef Name="idUtilisateur" />
+            </Principal>
+            <Dependent Role="facture">
+              <PropertyRef Name="idUtilisateur" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -420,6 +436,7 @@
           <EntitySetMapping Name="approvisionnement">
             <EntityTypeMapping TypeName="bdStockModel.approvisionnement">
               <MappingFragment StoreEntitySet="approvisionnement">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="prixUnitaire" ColumnName="prixUnitaire" />
                 <ScalarProperty Name="quantite" ColumnName="quantite" />
                 <ScalarProperty Name="dateExpiration" ColumnName="dateExpiration" />
@@ -440,6 +457,7 @@
           <EntitySetMapping Name="facture">
             <EntityTypeMapping TypeName="bdStockModel.facture">
               <MappingFragment StoreEntitySet="facture">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="idUtilisateur" ColumnName="idUtilisateur" />
                 <ScalarProperty Name="idLivraison" ColumnName="idLivraison" />
                 <ScalarProperty Name="date" ColumnName="date" />
@@ -459,11 +477,22 @@
           <EntitySetMapping Name="produit">
             <EntityTypeMapping TypeName="bdStockModel.produit">
               <MappingFragment StoreEntitySet="produit">
+                <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="idCategorie" ColumnName="idCategorie" />
                 <ScalarProperty Name="QteSeuil" ColumnName="QteSeuil" />
                 <ScalarProperty Name="description" ColumnName="description" />
                 <ScalarProperty Name="libelle" ColumnName="libelle" />
                 <ScalarProperty Name="idPoduit" ColumnName="idPoduit" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="venteProduit">
+            <EntityTypeMapping TypeName="bdStockModel.venteProduit">
+              <MappingFragment StoreEntitySet="venteProduit">
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="quantite" ColumnName="quantite" />
+                <ScalarProperty Name="idApprivisionnement" ColumnName="idApprivisionnement" />
+                <ScalarProperty Name="idFacture" ColumnName="idFacture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -478,21 +507,16 @@
           <EntitySetMapping Name="utilisateur">
             <EntityTypeMapping TypeName="bdStockModel.utilisateur">
               <MappingFragment StoreEntitySet="utilisateur">
+                <ScalarProperty Name="telephone" ColumnName="telephone" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="prenom" ColumnName="prenom" />
+                <ScalarProperty Name="nom" ColumnName="nom" />
                 <ScalarProperty Name="idRole" ColumnName="idRole" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="email" ColumnName="email" />
                 <ScalarProperty Name="motDePasse" ColumnName="motDePasse" />
                 <ScalarProperty Name="identifiant" ColumnName="identifiant" />
                 <ScalarProperty Name="idUtilisateur" ColumnName="idUtilisateur" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="venteProduit">
-            <EntityTypeMapping TypeName="bdStockModel.venteProduit">
-              <MappingFragment StoreEntitySet="venteProduit">
-                <ScalarProperty Name="quantite" ColumnName="quantite" />
-                <ScalarProperty Name="idApprivisionnement" ColumnName="idApprivisionnement" />
-                <ScalarProperty Name="idFacture" ColumnName="idFacture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

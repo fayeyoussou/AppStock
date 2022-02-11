@@ -26,6 +26,7 @@ namespace AppStock.Modeles
         public System.DateTime dateExpiration { get; set; }
         public double quantite { get; set; }
         public double prixUnitaire { get; set; }
+        public string status { get; set; }
     
         public virtual produit produit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

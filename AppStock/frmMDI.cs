@@ -9,14 +9,22 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.VisualBasic.Devices;
 using AppStock.Utilisateur;
+using AppStock.Modeles;
 
 namespace AppStock
 {
     public partial class frmMDI : Form
     {
-        public frmMDI()
+        private utilisateur u;
+        public frmMDI(utilisateur u)
         {
             InitializeComponent();
+            this.u = u;
+            if (u.idRole == 1)
+            {
+                tsmcodification.Visible = false;
+            }
+
         }
 
         private void frmMDI_Load(object sender, EventArgs e)
@@ -25,6 +33,7 @@ namespace AppStock
             this.Width= computer.Screen.Bounds.Width;
             this.Height = computer.Screen.Bounds.Height;
             this.Location = new Point(0,0);
+            //tsmcodification.Visible = false;
         }
 
         private void utilisateurToolStripMenuItem_Click(object sender, EventArgs e)
@@ -39,6 +48,11 @@ namespace AppStock
         private void quitterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void profilToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

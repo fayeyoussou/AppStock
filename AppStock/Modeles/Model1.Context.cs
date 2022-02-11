@@ -30,8 +30,8 @@ namespace AppStock.Modeles
         public virtual DbSet<facture> facture { get; set; }
         public virtual DbSet<livraison> livraison { get; set; }
         public virtual DbSet<produit> produit { get; set; }
+        public virtual DbSet<venteProduit> venteProduit { get; set; }
         public virtual DbSet<role> role { get; set; }
         public virtual DbSet<utilisateur> utilisateur { get; set; }
-        public virtual DbSet<venteProduit> venteProduit { get; set; }
     }
 }

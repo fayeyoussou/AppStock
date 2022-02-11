@@ -18,6 +18,7 @@ namespace AppStock.Utilisateur
         bdStockEntities bd = new bdStockEntities();
         public frmUtilisateur()
         {
+            
             InitializeComponent();
         }
 
@@ -31,21 +32,26 @@ namespace AppStock.Utilisateur
             bool exist = ulist.Where(a => a.identifiant.ToUpper().Trim() == txtIdentifiant.Text.ToUpper().Trim()).Count() > 0;
             //lblEmail.Text = exist.ToString();
             bool isnotvalid = !Helper.IsValidEmail(txtEmail.Text);
-            
-            if (isnotvalid || exist) {
+            int? id = int.Parse(dgRole.CurrentRow.Cells[0].Value.ToString());
+
+            if (isnotvalid || exist || !id.HasValue) {
                 if (isnotvalid) lblEmail.Text = "Email invalid ";
-                if (isnotvalid && exist) lblEmail.Text += " et "; 
+                if (isnotvalid && exist) lblEmail.Text += " et ";
                 if (exist) lblEmail.Text += "utilisateur existe deja";
+                if(!id.HasValue && (exist || isnotvalid)) lblEmail.Text += " et ";
+                if (!id.HasValue) lblEmail.Text += "choisir une colonne role";
             }            
             else
             {
                 using (MD5 md5Hash = MD5.Create())
                 {
+                    
+                    
                     u.identifiant = txtIdentifiant.Text;
                     u.email = txtEmail.Text;
                     u.motDePasse = Helper.getMd5Hash("passer123");
                     u.status = "O";
-                    u.role();
+                    u.idRole = id.Value;
                     bd.utilisateur.Add(u);
                     bd.SaveChanges();
                     effacer();
@@ -62,6 +68,11 @@ namespace AppStock.Utilisateur
         private void btnEffacer_Click(object sender, EventArgs e)
         {
             effacer();
+        }
+
+        private void frmUtilisateur_Load(object sender, EventArgs e)
+        {
+            dgRole.DataSource = bd.role.ToList();
         }
     }
 }

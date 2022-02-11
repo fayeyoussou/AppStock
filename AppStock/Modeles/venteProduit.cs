@@ -17,6 +17,7 @@ namespace AppStock.Modeles
         public int idFacture { get; set; }
         public int idApprivisionnement { get; set; }
         public double quantite { get; set; }
+        public string status { get; set; }
     
         public virtual approvisionnement approvisionnement { get; set; }
         public virtual facture facture { get; set; }

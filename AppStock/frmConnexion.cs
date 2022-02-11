@@ -35,7 +35,7 @@ namespace AppStock
             }
             if (rep)
             {
-                frmMDI f = new frmMDI();
+                frmMDI f = new frmMDI(leUser);
                 f.Show();
                 this.Hide();
             }

@@ -24,10 +24,11 @@ namespace AppStock.Modeles
         public System.DateTime date { get; set; }
         public Nullable<int> idLivraison { get; set; }
         public int idUtilisateur { get; set; }
+        public string status { get; set; }
     
         public virtual livraison livraison { get; set; }
-        public virtual utilisateur utilisateur { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<venteProduit> venteProduit { get; set; }
+        public virtual utilisateur utilisateur { get; set; }
     }
 }

@@ -10,15 +10,15 @@
         <EntityTypeShape EntityType="bdStockModel.facture" Width="1.5" PointX="5.25" PointY="1" />
         <EntityTypeShape EntityType="bdStockModel.livraison" Width="1.5" PointX="3" PointY="5.375" />
         <EntityTypeShape EntityType="bdStockModel.produit" Width="1.5" PointX="3" PointY="8" />
-        <EntityTypeShape EntityType="bdStockModel.role" Width="1.5" PointX="0.75" PointY="1.375" />
-        <EntityTypeShape EntityType="bdStockModel.utilisateur" Width="1.5" PointX="3" PointY="1" />
         <EntityTypeShape EntityType="bdStockModel.venteProduit" Width="1.5" PointX="7.5" PointY="1.25" />
         <AssociationConnector Association="bdStockModel.FK_approvisionnement_produit" />
         <AssociationConnector Association="bdStockModel.FK_venteProduit_approvisionnement" />
         <AssociationConnector Association="bdStockModel.FK_produit_categorie" />
         <AssociationConnector Association="bdStockModel.FK_facture_livraison" />
-        <AssociationConnector Association="bdStockModel.FK_facture_utilisateur" />
         <AssociationConnector Association="bdStockModel.FK_venteProduit_facture" />
+        <EntityTypeShape EntityType="bdStockModel.role" Width="1.5" PointX="0.75" PointY="1.5" />
+        <EntityTypeShape EntityType="bdStockModel.utilisateur" Width="1.5" PointX="3" PointY="11.375" />
+        <AssociationConnector Association="bdStockModel.FK_facture_utilisateur" />
         <AssociationConnector Association="bdStockModel.FK_utilisateur_role" />
       </Diagram>
     </edmx:Diagrams>
