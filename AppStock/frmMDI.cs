@@ -52,6 +52,16 @@ namespace AppStock
 
         private void profilToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            frmProfil f = new frmProfil(this.u);
+            f.MdiParent=this;
+            f.Show();
+            f.WindowState=FormWindowState.Maximized;
+        }
+
+        private void seDeconnecterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            frmConnexion f = new frmConnexion();
+            f.Show();
 
         }
     }

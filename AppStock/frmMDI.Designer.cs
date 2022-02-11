@@ -32,7 +32,6 @@
             this.actionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.seDeconnecterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.quitterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.seConnecterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmAdministration = new System.Windows.Forms.ToolStripMenuItem();
             this.utilisateurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tsmcodification = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,10 +68,9 @@
             // actionToolStripMenuItem
             // 
             this.actionToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.profilToolStripMenuItem,
             this.seDeconnecterToolStripMenuItem,
-            this.quitterToolStripMenuItem,
-            this.seConnecterToolStripMenuItem,
-            this.profilToolStripMenuItem});
+            this.quitterToolStripMenuItem});
             this.actionToolStripMenuItem.Name = "actionToolStripMenuItem";
             this.actionToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
             this.actionToolStripMenuItem.Text = "Action";
@@ -82,6 +80,7 @@
             this.seDeconnecterToolStripMenuItem.Name = "seDeconnecterToolStripMenuItem";
             this.seDeconnecterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.seDeconnecterToolStripMenuItem.Text = "Se Deconnecter";
+            this.seDeconnecterToolStripMenuItem.Click += new System.EventHandler(this.seDeconnecterToolStripMenuItem_Click);
             // 
             // quitterToolStripMenuItem
             // 
@@ -89,12 +88,6 @@
             this.quitterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.quitterToolStripMenuItem.Text = "Quitter";
             this.quitterToolStripMenuItem.Click += new System.EventHandler(this.quitterToolStripMenuItem_Click);
-            // 
-            // seConnecterToolStripMenuItem
-            // 
-            this.seConnecterToolStripMenuItem.Name = "seConnecterToolStripMenuItem";
-            this.seConnecterToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.seConnecterToolStripMenuItem.Text = "Se Connecter";
             // 
             // tsmAdministration
             // 
@@ -241,7 +234,6 @@
         private System.Windows.Forms.ToolStripMenuItem listeCategoriesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ajoutProduitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem listeProduitToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem seConnecterToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tsmventes;
         private System.Windows.Forms.ToolStripMenuItem nouvelleVenteToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem voirMesFactureToolStripMenuItem;

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using AppStock.Modeles;
 
 namespace AppStock.App_Code
 {
@@ -53,6 +54,11 @@ namespace AppStock.App_Code
         {
 
             return Regex.IsMatch(strIn, @"^([0-9a-zA-Z]([-\.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$");
+        }
+        public static bool existID(String user)
+        {
+            return (new bdStockEntities()).utilisateur.ToList().Where(u=>u.identifiant.Trim() == user.Trim()).Count() > 0;
+            
         }
     }
 }

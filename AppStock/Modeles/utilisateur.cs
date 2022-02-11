@@ -26,6 +26,10 @@ namespace AppStock.Modeles
         public string email { get; set; }
         public string status { get; set; }
         public int idRole { get; set; }
+        public string nom { get; set; }
+        public string prenom { get; set; }
+        public string adresse { get; set; }
+        public string telephone { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<facture> facture { get; set; }
